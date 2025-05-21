@@ -1,5 +1,5 @@
 def call(url,branch){
       echo "code pulling"
-      git url:"https://github.com/avinash-sharma-121/react-testing-with-jenkins.git", branch: "main"
+      git url: "${url}", branch: "${branch}"
       echo "code pull successfull"
 }
