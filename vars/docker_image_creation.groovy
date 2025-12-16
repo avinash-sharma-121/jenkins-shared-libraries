@@ -7,6 +7,6 @@ def call(image_name) {
         docker ps
         pwd
         ls -l
-        docker build -t ${imageName} .
     '''
+    sh 'docker build -t ${imageName} .'
 }
