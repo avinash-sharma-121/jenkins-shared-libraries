@@ -1,4 +1,4 @@
-def call(String image_name, String tags, String docekr_username) {
+def call(String docker_username,String image_name, String tags) {
     echo "code build with docker"
     sh '''
         whoami
@@ -6,5 +6,5 @@ def call(String image_name, String tags, String docekr_username) {
         pwd
         ls -l
     '''
-    sh 'docker build -t ' ${docekr_username}/${image_name}:${tags} .'
+    sh "docker build -t ${docker_username}/${image_name}:${tags} ."
 }
