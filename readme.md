@@ -29,15 +29,12 @@ It provides common pipeline steps for **Git checkout, Docker image build & push,
 ## 📂 Repository Structure
 
 .
-├── docker_image_creation.groovy
-├── git_checkout.groovy
-├── push_img_to_dockerHub.groovy
-├── trivy_docker_scaner_pass_fail.groovy
-├── trivy_docker_scaner_report.groovy
-└── trivy_file_system_scan.groovy
-
-yaml
-Copy code
+- docker_image_creation.groovy
+- git_checkout.groovy
+- push_img_to_dockerHub.groovy
+- trivy_docker_scaner_pass_fail.groovy
+- trivy_docker_scaner_report.groovy
+- trivy_file_system_scan.groovy
 
 Each Groovy file represents a **custom Jenkins pipeline step**.
 
@@ -63,42 +60,40 @@ Ensure the Jenkins agent has:
 
 **File:** `git_checkout.groovy`
 
-```groovy
+groovy
 git_checkout('https://github.com/org/repo.git', 'main')
 Purpose:
 Clones the given Git repository and branch into the Jenkins workspace.
 
-2️⃣ Docker Image Creation
+
+Docker Image Creation
 File: docker_image_creation.groovy
 
-groovy
-Copy code
 docker_image_creation('docker_username', 'my-app', 'v1.0')
+
 Purpose:
 Builds a Docker image using the Dockerfile in the workspace.
 
 Resulting Image:
-
-bash
-Copy code
 docker_username/my-app:v1.0
-3️⃣ Push Docker Image to Docker Hub
+
+
+Push Docker Image to Docker Hub
 File: push_img_to_dockerHub.groovy
 
-groovy
-Copy code
 push_img_to_dockerHub('docker_username', 'my-app', 'v1.0')
+
 Purpose:
 Pushes the Docker image to Docker Hub.
 
 ⚠️ Docker authentication should be handled using Jenkins credentials
 (credential-based login code is already included as comments in the script).
 
-4️⃣ Trivy Docker Image Scan (Pass / Fail)
+
+Trivy Docker Image Scan (Pass / Fail)
 File: trivy_docker_scaner_pass_fail.groovy
 
-groovy
-Copy code
+
 trivy_docker_scaner_pass_fail('docker_username/my-app:v1.0')
 Purpose:
 
@@ -108,11 +103,10 @@ Fails the pipeline if any CRITICAL issue is found
 
 Acts as a security gate
 
-5️⃣ Trivy Docker Image Scan (Report Only)
+
+Trivy Docker Image Scan (Report Only)
 File: trivy_docker_scaner_report.groovy
 
-groovy
-Copy code
 trivy_docker_scaner_report('docker_username/my-app:v1.0')
 Purpose:
 
@@ -122,19 +116,17 @@ Generates console output only
 
 Does not fail the pipeline
 
-6️⃣ Trivy File System Scan
+Trivy File System Scan
 File: trivy_file_system_scan.groovy
 
-groovy
-Copy code
 trivy_file_system_scan()
+
 Purpose:
 Scans the application source code and dependencies for vulnerabilities.
 
 🧩 Complete Jenkinsfile Example
-groovy
-Copy code
-@Library('jenkins-shared-lib') _
+
+```@Library('jenkins-shared-lib') _
 
 pipeline {
     agent any
@@ -184,7 +176,9 @@ pipeline {
             }
         }
     }
-}
+}```
+
+
 🔐 Security Best Practices
 Use Jenkins Credentials for Docker Hub login
 
@@ -193,6 +187,8 @@ Enforce Trivy pass/fail scans for production pipelines
 Scan both filesystem and container images
 
 Block deployments on CRITICAL vulnerabilities
+
+
 
 📌 Future Enhancements
 Docker login fully integrated with Jenkins credentials
